@@ -80,27 +80,34 @@
         }
 
         .todolist>ul {
-            padding: 10px;
+            padding: 5px;
             border: 1px solid red;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: scroll;
+            
         }
 
         .todolist>ul>li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-           background-color:rgb(25,25,51);
-           padding: 10px;
-           border-radius: 10px;
-        
+            background-color: rgb(25, 25, 51);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px;
         }
-         .todolist>ul>li>span:nth-of-type(2)>i{
+
+        .todolist>ul>li>span:nth-of-type(2)>i {
             font-size: 20px;
             margin: 5px;
             cursor: pointer;
-         }
-          .todolist>ul>li>span:nth-of-type(2)>i:hover{
-            
-          }
+            transition: all .4s;
+        }
+
+        .todolist>ul>li>span:nth-of-type(2)>i:hover {
+            color: red;
+        }
     </style>
 </head>
 
@@ -110,7 +117,7 @@
 
             <h2>ToDo-List</h2>
             <div>
-                <input type="text" placeholder="Add new task"><button>+</button>
+                <input type="text" placeholder="Add new task" id="title"><button onclick="_add()">+</button>
             </div>
             <ul>
                 <li>
@@ -118,7 +125,7 @@
                         Sample Text
                     </span>
                     <span>
-                        <i class="fa fa-trash"></i>
+                        <i class="fa fa-trash" onclick="_delete(this)"></i>
                         <i class="material-icons">edit</i>
                     </span>
                 </li>
@@ -126,7 +133,18 @@
         </div>
     </main>
     <script>
-
+        function _add() {
+            let title = document.getElementById('title').value;
+            if (title.length > 2) {
+                let temp = document.createElement('li');
+                temp.innerHTML = "<span>" + title + "</span><span><i class='fa fa-trash' onclick='_delete(this)'></i><i class='material-icons'>edit</i></span>"
+                document.querySelector('.todolist>ul').appendChild(temp);
+                document.querySelector('.todolist>div>input').value = null;
+            }
+        }
+        function _delete(self){
+            self.parentElement.parentElement.remove();
+        }
     </script>
 </body>
 
