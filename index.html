@@ -54,7 +54,7 @@
 
         }
 
-        .todolist>div>button {
+        .todolist>div>div>button {
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -67,6 +67,7 @@
             color: white;
             border: none;
             cursor: pointer;
+            transition: 1s;
         }
 
         .todolist>div>input {
@@ -112,6 +113,35 @@
         .todolist>ul>li>span:nth-of-type(2)>i:hover {
             color: red;
         }
+
+
+
+        #btn-part {
+            width: 10%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        #btn-part>button {
+            position: absolute;
+            left: 50%;
+        }
+
+        #btn-part>button:nth-of-type(1) {
+            z-index: 1;
+        }
+
+        #btn-part>button:nth-of-type(2) {
+            opacity: 0;
+            transition: all 1s;
+        }
+
+        .rotate {
+            opacity: 1 !important;
+            z-index: 1;
+            transform: translateY(-150%)rotate(360deg);
+        }
     </style>
 </head>
 
@@ -121,7 +151,8 @@
 
             <h2>ToDo-List</h2>
             <div>
-                <input type="text" placeholder="Add new task" id="title"><button onclick="_add()">+</button>
+                <input type="text" placeholder="Add new task" id="title">
+                <div id="btn-part"><button onclick="_add()">+</button><button onclick="change()">^</button></div>
             </div>
             <ul>
                 <li>
@@ -135,6 +166,7 @@
         </div>
     </main>
     <script>
+        let flag;
         function _add() {
             let title = document.getElementById('title').value;
             if (title.length > 2) {
@@ -156,8 +188,16 @@
         }
         function edit(self) {
             let x = self.parentElement.previousElementSibling.innerHTML;
-            console.log(x)
+            flag = self;
             document.getElementById('title').value = x;
+            document.querySelector('#btn-part>button:nth-of-type(2)').classList.add('rotate');
+        }
+        function change() {
+            let temp = document.getElementById('title').value;
+            flag.parentElement.previousElementSibling.innerHTML = temp;
+            document.getElementById('title').value = null;
+            document.querySelector('#btn-part>button:nth-of-type(2)').classList.remove('rotate');
+
         }
     </script>
 </body>
