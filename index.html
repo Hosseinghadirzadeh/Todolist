@@ -81,11 +81,15 @@
 
         .todolist>ul {
             padding: 5px;
-            border: 1px solid red;
+            /* border: 1px solid red; */
             margin-top: 5px;
             max-height: 300px;
             overflow-y: scroll;
-            
+
+        }
+
+        .todolist>ul::-webkit-scrollbar {
+            display: none;
         }
 
         .todolist>ul>li {
@@ -121,12 +125,10 @@
             </div>
             <ul>
                 <li>
-                    <span>
-                        Sample Text
-                    </span>
+                    <span>Sample Text</span>
                     <span>
                         <i class="fa fa-trash" onclick="_delete(this)"></i>
-                        <i class="material-icons">edit</i>
+                        <i class="material-icons" onclick="edit(this)">edit</i>
                     </span>
                 </li>
             </ul>
@@ -137,13 +139,25 @@
             let title = document.getElementById('title').value;
             if (title.length > 2) {
                 let temp = document.createElement('li');
-                temp.innerHTML = "<span>" + title + "</span><span><i class='fa fa-trash' onclick='_delete(this)'></i><i class='material-icons'>edit</i></span>"
+
+                temp.innerHTML = "<span>" + title + "</span><span><i class='fa fa-trash' onclick='_delete(this)'></i><i class='material-icons' onclick='edit(this)'>edit</i></span>"
                 document.querySelector('.todolist>ul').appendChild(temp);
                 document.querySelector('.todolist>div>input').value = null;
             }
+            else {
+                alert('Please insert proper values!')
+            }
         }
-        function _delete(self){
-            self.parentElement.parentElement.remove();
+        function _delete(self) {
+            x = prompt('Are you sure? Y/N');
+            x = x.toLowerCase();
+            console.log(x);
+            if (x == 'y') { self.parentElement.parentElement.remove(); }
+        }
+        function edit(self) {
+            let x = self.parentElement.previousElementSibling.innerHTML;
+            console.log(x)
+            document.getElementById('title').value = x;
         }
     </script>
 </body>
